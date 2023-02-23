@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>readme.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="readme">Readme</h1>
+<p>This project uses the Django Rest Framework to implement a RESTful API for a restaurant allowing the staff to manage their tables, reservations with each member of the staff having their respective permissions and roles.</p>
+<h2 id="required-packages">Required Packages:</h2>
+<p>This projects is written in python and uses the following packages</p>
+<ul>
+<li>django</li>
+<li>django rest framework</li>
+<li>psycopg2</li>
+</ul>
+<pre><code>pip install Django
+pip install djangorestframework
+pip install markdown       
+pip install django-filter  
+pip install psycopg2
+</code></pre>
+<h2 id="create-the-database">Create the database:</h2>
+<p>Use the pgAdmin interface or use the following SQL to create the database. A SQL file is included as well</p>
+<pre><code>CREATE DATABASE restaurant_db
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+</code></pre>
+<h2 id="create-migrations">Create Migrations:</h2>
+<p>Use the following commands to create migrations for the database</p>
+<ul>
+<li>python <a href="http://manage.py">manage.py</a> makemigrations</li>
+<li>python <a href="http://manage.py">manage.py</a> migrate</li>
+</ul>
+<h2 id="create-admin-user">Create Admin User:</h2>
+<p>To get an admin account which is required to create Employee accounts and Admin account use the following command with role being “Admin” (without the quotes).</p>
+<ul>
+<li>python <a href="http://manage.py">manage.py</a> createsuperuser</li>
+</ul>
+<h2 id="login-and-get-token">Login and get token:</h2>
+<p>use the /api/users/login endpoint with the following format for the POST request</p>
+<pre><code>{
+  "user": {
+    
+    "emp_number": "",
+    "password": ""
+	}
+}
+</code></pre>
+<p>to get the authorization token with the authorization header being</p>
+<pre><code>Authorization: Token + ACCOUNT_TOKEN_HERE
+</code></pre>
+<h2 id="postman-collections-and-environment">Postman Collections and Environment</h2>
+<p>The postman collection and environment are included.<br>
+Set The AUTH_TOKEN_HEADER environment variable to your specified user token.</p>
+<h2 id="algorithm-diagrams-and-flowcharts">Algorithm diagrams and flowcharts</h2>
+<p>The diagrams are included in the Diagrams folder</p>
+<h2 id="running-tests">Running Tests:</h2>
+<p>use the following to run the automated tests</p>
+<ul>
+<li>python <a href="http://manage.py">manage.py</a> test</li>
+</ul>
+<h2 id="running-local-dev-server">Running local dev server:</h2>
+<p>use the following to run the local server<br>
+tests in ./TableMangement/tests.py</p>
+<ul>
+<li>python <a href="http://manage.py">manage.py</a> runserver</li>
+</ul>
+<h2 id="endpoints">Endpoints:</h2>
+<ul>
+<li>/api/users/register <strong>POST</strong><br>
+– admin account required for access<br>
+– example request:</li>
+</ul>
+<pre><code>{
+ "user": {
+   "emp_name": "test3",
+   "emp_number": "1386",
+   "role": "Employee",
+   "password": "testtest"
+}
+}
+</code></pre>
+<ul>
+<li>/api/users/login <strong>POST</strong><br>
+– example request:</li>
+</ul>
+<pre><code>{
+  "user": {
+    
+    "emp_number": "3333",
+    "password": "passowrd"
+	}
+}
+</code></pre>
+<ul>
+<li>/api/table/addtable <strong>POST</strong><br>
+–  admin account required for access<br>
+– example request:</li>
+</ul>
+<pre><code>{
+ "table": {
+   "table_number" : 3,
+   "num_seats": 2
+ }
+}
+</code></pre>
+<ul>
+<li>
+<p>/api/table/gettables <strong>GET</strong><br>
+– admin account required for access</p>
+</li>
+<li>
+<p>/api/table/deletetable/int:table_number <strong>DELETE</strong><br>
+– admin account required for access</p>
+</li>
+<li>
+<p>/api/reservation/setreservation <strong>POST</strong><br>
+– example request:</p>
+</li>
+</ul>
+<pre><code>{
+  "reservation": {
+    "table_number": 3,
+    "start_time":"2023-02-22 23:45:06",
+    "end_time": "2023-02-22 23:55:06"
+  }
+  
+}
+</code></pre>
+<ul>
+<li>
+<p>/api/reservation/getallreservations <strong>GET</strong><br>
+– admin account required for access</p>
+</li>
+<li>
+<p>/api/reservation/getallreservations <strong>POST</strong><br>
+– admin account required for access<br>
+– used to filter by table number<br>
+---- example request:</p>
+</li>
+</ul>
+<pre><code>{
+  "tables":[1,2]
+}
+</code></pre>
+<ul>
+<li>
+<p>/reservation/deletereservation/int:id <strong>DELETE</strong></p>
+</li>
+<li>
+<p>/api/reservation/getallreservationstoday <strong>GET</strong></p>
+</li>
+<li>
+<p>/api/reservation/gettimeslots/int:required_seats <strong>GET</strong></p>
+</li>
+<li>
+<p>/api/reservation/getallreservationsfromdate/date:start/date:end <strong>GET</strong><br>
+– admin account required for access</p>
+</li>
+<li>
+<p>/api/reservation/getallreservationsfromdate/date:start/date:end <strong>POST</strong><br>
+– admin account required for access<br>
+– used to filter by table number<br>
+---- example request:</p>
+</li>
+</ul>
+<pre><code>{
+  "tables":[1,2]
+}
+</code></pre>
+<ul>
+<li>/api/reservation/getallreservationstoday/str:‘asc’ <em>or</em> str:‘desc’ <strong>GET</strong></li>
+</ul>
+<h1 id="models">Models</h1>
+<h2 id="user">User</h2>
+
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>emp_name</td>
+<td>CharField</td>
+<td>The employee name</td>
+</tr>
+<tr>
+<td>emp_number</td>
+<td>CharField</td>
+<td>Unique four digit identifier</td>
+</tr>
+<tr>
+<td>role</td>
+<td>CharField</td>
+<td>Either “Admin” or “Employee”</td>
+</tr>
+<tr>
+<td>password</td>
+<td>CharField</td>
+<td>passoword with min length of 6</td>
+</tr>
+</tbody>
+</table><h2 id="table">Table</h2>
+
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>table_number</td>
+<td>IntegerField</td>
+<td>Unique Table number in the restaurant</td>
+</tr>
+<tr>
+<td>num_seats</td>
+<td>IntegerField</td>
+<td>The number of seats in the range 1-12</td>
+</tr>
+</tbody>
+</table><h2 id="reservation">Reservation</h2>
+
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start_time</td>
+<td>DateTimeField</td>
+<td>the start date of the reservation</td>
+</tr>
+<tr>
+<td>End_time</td>
+<td>DateTimeField</td>
+<td>the end date of the reservation</td>
+</tr>
+<tr>
+<td>table</td>
+<td>Foreign Key</td>
+<td>The table associated with the reservation</td>
+</tr>
+</tbody>
+</table></div>
+</body>
+
+</html>
