@@ -243,14 +243,14 @@ class ReservationTestCase(APITestCase):
         reservation2 = Reservation.objects.create(start_time=datetime.now()+timedelta(days=2), end_time=datetime.now()+timedelta(days=2), table=table)
 
         current_date = (datetime.now()+timedelta(hours=1)).strftime('%Y-%m-%d')
-        print(current_date)
+        #print(current_date)
 
         resp = self.client.get('/api/reservation/getallreservationsfromdate/'+current_date+'/'+current_date, content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation1.delete()
         reservation2.delete()
         table.delete()
         
-        print(resp.json())
+        #print(resp.json())
         self.assertEqual(resp.json()['count'],1)
 
     def test_get_reservations_date_range_filtertable(self):
