@@ -26,6 +26,7 @@ CREATE DATABASE restaurant_db
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
 ```
+Change the respective config ie. username/password in Django's settings.py file in the DATABASES dict.
 
  ## Create Migrations:
  Use the following commands to create migrations for the database
