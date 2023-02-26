@@ -233,7 +233,7 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/table **POST**
+-  /api/tables **POST**
 -- adds a table
 -- admin account required for access
 -- example request:
@@ -251,7 +251,7 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/table **GET**
+-  /api/tables **GET**
 -- gets all tables
 -- admin account required for access
 
@@ -259,7 +259,7 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/table/int:table_number **DELETE**
+-  /api/tables/int:table_number **DELETE**
 -- deletes a table
 -- admin account required for access
 
@@ -267,7 +267,7 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/reservation **POST**
+-  /api/reservations **POST**
 -- sets a reservation
 -- example request:
 
@@ -286,7 +286,7 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/reservation **GET**
+-  /api/reservations **GET**
 -- gets all reservations
 -- admin account required for access
 
@@ -294,41 +294,41 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/reservation?tables[]=*value1*&tables[]=*value2* **GET**
+-  /api/reservations?tables[]=*value1*&tables[]=*value2* **GET**
 -- gets all reservations and filters by the list of tables in the url params
 -- admin account required for access
 -- used to filter by table number
 
--  /api/reservation?date=*start*&date=*end* **GET**
+-  /api/reservations?date=*start*&date=*end* **GET**
 -- gets all reservations filtered by date
 -- admin account required for access
 
   
 
--  /api/reservation?date=*start*&date=*end*&tables[]=*value1*&tables[]=*value2* **GET**
+-  /api/reservations?date=*start*&date=*end*&tables[]=*value1*&tables[]=*value2* **GET**
 -- gets all reservations filtered by date and the list of tables in the url parameters
 -- admin account required for access
 -- used to filter by table number
   
   
 
--  /reservation/int:id **DELETE**
+-  /reservations/int:id **DELETE**
 -- deletes a reservation number
 
   
 
--  /api/today/reservation **GET**
+-  /api/today/reservations **GET**
 -- gets all reservations today
 
   
 
--  /api/today/reservation/timeslots/int:required_seats **GET**
+-  /api/today/reservations/timeslots/int:required_seats **GET**
 -- gets all timeslots available today for the required seats
 
   
   
 
--  /api/today/reservation?order=asc *or* order=desc **GET**
+-  /api/today/reservations?order=asc *or* order=desc **GET**
 -- gets all reservations today by ascending or descending order
 
   
