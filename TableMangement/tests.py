@@ -198,8 +198,8 @@ class ReservationTestCase(APITestCase):
         #create one in a different day
         reservation2 = Reservation.objects.create(start_time=datetime.now()+timedelta(days=1), end_time=datetime.now()+timedelta(days=1), table=table2)
 
-        data = {"tables":[1]}
-        resp = self.client.post('/api/reservation/all', content_type='application/json',data=json.dumps(data), HTTP_AUTHORIZATION='Token '+user.token)
+        # data = {"tables":[1]}
+        resp = self.client.get('/api/reservation/all?tables[]=1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation1.delete()
         reservation2.delete()
         table1.delete()
@@ -268,8 +268,8 @@ class ReservationTestCase(APITestCase):
 
         current_date = (datetime.now()+timedelta(hours=1)).strftime('%Y-%m-%d')
         
-        data = {"tables":[1]}
-        resp = self.client.post('/api/reservation/all/'+current_date+'/'+current_date,data=json.dumps(data), content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        # data = {"tables":[1]}
+        resp = self.client.get('/api/reservation/all/'+current_date+'/'+current_date+"?tables[]=1", content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
         reservation1.delete()
         reservation2.delete()

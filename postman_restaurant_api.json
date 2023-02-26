@@ -596,9 +596,8 @@
               "entity": {
                 "type": "Request",
                 "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
-                  "name": "POST"
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
                 },
                 "body": {
                   "formBody": {
@@ -612,7 +611,13 @@
                 "uri": {
                   "query": {
                     "delimiter": "&",
-                    "items": []
+                    "items": [
+                      {
+                        "enabled": true,
+                        "name": "tables[]",
+                        "value": "1"
+                      }
+                    ]
                   },
                   "scheme": {
                     "name": "http",
@@ -628,11 +633,6 @@
                     "enabled": true,
                     "name": "Authorization",
                     "value": "${\"AUTH_TOKEN_HEADER\"}"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
                   }
                 ]
               }
@@ -641,9 +641,8 @@
               "entity": {
                 "type": "Request",
                 "method": {
-                  "requestBody": true,
-                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
-                  "name": "POST"
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
                 },
                 "body": {
                   "formBody": {
@@ -657,14 +656,20 @@
                 "uri": {
                   "query": {
                     "delimiter": "&",
-                    "items": []
+                    "items": [
+                      {
+                        "enabled": true,
+                        "name": "tables[]",
+                        "value": "1"
+                      }
+                    ]
                   },
                   "scheme": {
                     "name": "http",
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/reservation/getallreservationsfromdate/2023-02-20/2023-02-25"
+                  "path": "/api/reservation/all/2023-02-20/2023-02-25"
                 },
                 "id": "08f853cd-c72d-4839-9c7d-9f8d236e83d3",
                 "name": "get_all_reservations_by_date_filter_by_table",
@@ -673,11 +678,6 @@
                     "enabled": true,
                     "name": "Authorization",
                     "value": "${\"AUTH_TOKEN_HEADER\"}"
-                  },
-                  {
-                    "enabled": true,
-                    "name": "Content-Type",
-                    "value": "application/json"
                   }
                 ]
               }

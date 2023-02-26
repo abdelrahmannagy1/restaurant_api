@@ -134,26 +134,26 @@ class GetAllReservationsAPIView(APIView):
     def get(self, request, format=None):
         if not request.user.role == 'Admin': 
             raise exceptions.NotAuthenticated("Not an admin User")
+        
+        tables = request.query_params.getlist('tables[]')
+        
+        
+
+        if len(tables) > 0:
+            tables = [int(x) for x in tables]
+            reservations_qs = Reservation.objects.filter(table__table_number__in=tables)
+        else:
+            reservations_qs = Reservation.objects.all()
+
+
 
         paginator = CustomPagination()
-        reservations_qs = Reservation.objects.all()
         res = paginator.paginate_queryset(reservations_qs, request, view=self)
         serializer = self.serializer_class(res, many=True)
         
         return paginator.get_paginated_response(serializer.data)
     
-    def post(self, request, format=None):
-        if not request.user.role == 'Admin': 
-            raise exceptions.NotAuthenticated("Not an admin User")
-
-        paginator = CustomPagination()
-        tables = request.data.get('tables', {})
-        
-        reservations_qs = Reservation.objects.filter(table__table_number__in=tables)
-        res = paginator.paginate_queryset(reservations_qs, request, view=self)
-        serializer = self.serializer_class(res, many=True)
-        
-        return paginator.get_paginated_response(serializer.data)
+    
 
 
 class GetAllReservationsFromDateAPIView(APIView):
@@ -167,29 +167,24 @@ class GetAllReservationsFromDateAPIView(APIView):
 
         if start > end:
             return Response({"error": "Reservation outside working hours"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+        tables = request.query_params.getlist('tables[]')
+        if len(tables) > 0:
+            tables = [int(x) for x in tables]
+            reservations_qs = Reservation.objects.filter(start_time__date__gte=start, start_time__date__lte=end, table__table_number__in=tables)
+        else:
+            reservations_qs = Reservation.objects.filter(start_time__date__gte=start, start_time__date__lte=end)
+
+
 
         paginator = CustomPagination()
-        reservations_qs = Reservation.objects.filter(start_time__date__gte=start, start_time__date__lte=end)
+
         res = paginator.paginate_queryset(reservations_qs, request, view=self)
         serializer = self.serializer_class(res, many=True)
         
         return paginator.get_paginated_response(serializer.data)
 
-    def post(self, request, start=None, end=None, format=None):
-        if not request.user.role == 'Admin': 
-            raise exceptions.NotAuthenticated("Not an admin User")
-
-        if start > end:
-            return Response({"error": "Reservation outside working hours"}, status=status.HTTP_406_NOT_ACCEPTABLE)
-
-        paginator = CustomPagination()
-        tables = request.data.get('tables', {})
-        
-        reservations_qs = Reservation.objects.filter(start_time__date__gte=start, start_time__date__lte=end, table__table_number__in=tables)
-        res = paginator.paginate_queryset(reservations_qs, request, view=self)
-        serializer = self.serializer_class(res, many=True)
-        
-        return paginator.get_paginated_response(serializer.data)
+    
 
         
 
