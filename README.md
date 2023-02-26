@@ -483,7 +483,7 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/reservation/all **GET**
+-  /api/reservation **GET**
 
   
 
@@ -497,7 +497,7 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/reservation/all?tables[]=*value1*&tables[]=*value2* **GET**
+-  /api/reservation?tables[]=*value1*&tables[]=*value2* **GET**
 
   
 
@@ -511,34 +511,7 @@ tests in ./TableMangement/tests.py
 
 -- used to filter by table number
 
-  
-  
-
--  /reservation/int:id **DELETE**
-
-  
-
--- deletes a reservation number
-
-  
-
--  /api/reservation/today **GET**
-
-  
-
--- gets all reservations today
-
-  
-
--  /api/reservation/timeslots/int:required_seats **GET**
-
-  
-
--- gets all timeslots available today for the required seats
-
-  
-
--  /api/reservation/all/date:start/date:end **GET**
+-  /api/reservation?date=*start*&date=*end* **GET**
 
   
 
@@ -550,7 +523,7 @@ tests in ./TableMangement/tests.py
 
   
 
--  /api/reservation/all/date:start/date:end?tables[]=*value1*&tables[]=*value2* **GET**
+-  /api/reservation?date=*start*&date=*end*&tables[]=*value1*&tables[]=*value2* **GET**
 
   
 
@@ -563,18 +536,39 @@ tests in ./TableMangement/tests.py
   
 
 -- used to filter by table number
+  
+  
+
+-  /reservation/int:id **DELETE**
 
   
 
-
-
-  
-
--  /api/reservation/today/str:'asc' *or* str:'desc' **GET**
+-- deletes a reservation number
 
   
 
--- gets all reservations today ordered ascending or descending
+-  /api/today/reservation **GET**
+
+  
+
+-- gets all reservations today
+
+  
+
+-  /api/today/reservation/timeslots/int:required_seats **GET**
+
+  
+
+-- gets all timeslots available today for the required seats
+
+  
+  
+
+-  /api/today/reservation?order=asc *or* order=desc **GET**
+
+  
+
+-- gets all reservations today by ascending or descending order
 
   
 
