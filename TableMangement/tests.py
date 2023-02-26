@@ -25,17 +25,17 @@ class ReservationTestCase(APITestCase):
 
     def test_delete_table_not_admin(self):
         """
-            not admin registration
+            delete table
         """
         user = User.objects.create_user("test_admin","9999","Employee","testpassword")
 
-        resp = self.client.delete('/api/table/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.delete('/api/tables/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
        
         self.assertEquals(resp.status_code,403)
 
     def test_get_tables_not_admin(self):
         """
-            not admin
+            get tables while not admin
         """
         user = User.objects.create_user("test_admin","9999","Employee","testpassword")
         
@@ -45,7 +45,7 @@ class ReservationTestCase(APITestCase):
         #create one in the past
         reservation = Reservation.objects.create(start_time=datetime.now()-timedelta(days=1), end_time=datetime.now()-timedelta(days=1), table=table)
 
-        resp = self.client.get('/api/table', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/tables', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         
         table.delete()
@@ -55,7 +55,7 @@ class ReservationTestCase(APITestCase):
 
     def test_get_tables_admin(self):
         """
-            not admin
+            get tables while admin
         """
         user = User.objects.create_user("test_admin","9999","Admin","testpassword")
         
@@ -65,7 +65,7 @@ class ReservationTestCase(APITestCase):
         #create one in the past
         reservation = Reservation.objects.create(start_time=datetime.now()-timedelta(days=1), end_time=datetime.now()-timedelta(days=1), table=table)
 
-        resp = self.client.get('/api/table', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/tables', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         
         table.delete()
@@ -75,7 +75,7 @@ class ReservationTestCase(APITestCase):
 
     def test_get_reservations_today_order_asc(self):
         """
-            test the get reservations today order
+            test the get reservations today order ascending
         """
         user = User.objects.create_user("test_admin","9999","Admin","testpassword")
         
@@ -87,7 +87,7 @@ class ReservationTestCase(APITestCase):
 
         reservation2 = Reservation.objects.create(start_time=datetime.now()+timedelta(hours=2), end_time=datetime.now()+timedelta(hours=3), table=table)
 
-        resp = self.client.get('/api/today/reservation?order=asc', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/today/reservations?order=asc', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
         reservation1.delete()
         reservation2.delete()
@@ -100,7 +100,7 @@ class ReservationTestCase(APITestCase):
 
     def test_get_reservations_today_order_desc(self):
         """
-            test the get reservations today order
+            test the get reservations today order descending
         """
         user = User.objects.create_user("test_admin","9999","Admin","testpassword")
         
@@ -112,7 +112,7 @@ class ReservationTestCase(APITestCase):
         reservation2 = Reservation.objects.create(start_time=datetime.now()+timedelta(hours=2), end_time=datetime.now()+timedelta(hours=3), table=table)
         reservation2_date =(datetime.now()+timedelta(hours=2))
 
-        resp = self.client.get('/api/today/reservation?order=desc', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/today/reservations?order=desc', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
         reservation1.delete()
         reservation2.delete()
@@ -136,7 +136,7 @@ class ReservationTestCase(APITestCase):
             "table_number": table.table_number
             }
         }
-        resp = self.client.post('/api/reservation',data=json.dumps(data), content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.post('/api/reservations',data=json.dumps(data), content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
         reservation.delete()
         table.delete()
@@ -155,9 +155,9 @@ class ReservationTestCase(APITestCase):
             "table_number": table.table_number
             }
         }
-        resp = self.client.post('/api/reservation',data=json.dumps(data), content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.post('/api/reservations',data=json.dumps(data), content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
-        self.client.delete('/api/table/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        self.client.delete('/api/tables/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
 
         reservation.delete()
         #table.delete()
@@ -176,7 +176,7 @@ class ReservationTestCase(APITestCase):
         #create one in a different day
         reservation2 = Reservation.objects.create(start_time=datetime.now()+timedelta(days=1), end_time=datetime.now()+timedelta(days=1), table=table)
 
-        resp = self.client.get('/api/today/reservation', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/today/reservations', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation1.delete()
         reservation2.delete()
         table.delete()
@@ -199,7 +199,7 @@ class ReservationTestCase(APITestCase):
         reservation2 = Reservation.objects.create(start_time=datetime.now()+timedelta(days=1), end_time=datetime.now()+timedelta(days=1), table=table2)
 
         # data = {"tables":[1]}
-        resp = self.client.get('/api/reservation?tables[]=1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/reservations?tables[]=1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation1.delete()
         reservation2.delete()
         table1.delete()
@@ -222,7 +222,7 @@ class ReservationTestCase(APITestCase):
         reservation2 = Reservation.objects.create(start_time=datetime.now()+timedelta(days=1), end_time=datetime.now()+timedelta(days=1), table=table1)
 
         
-        resp = self.client.get('/api/reservation', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/reservations', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation1.delete()
         reservation2.delete()
         table1.delete()
@@ -246,7 +246,7 @@ class ReservationTestCase(APITestCase):
         current_date = (datetime.now()+timedelta(hours=1)).strftime('%Y-%m-%d')
         #print(current_date)
 
-        resp = self.client.get('/api/reservation?start='+current_date+'&end='+current_date, content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/reservations?start='+current_date+'&end='+current_date, content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation1.delete()
         reservation2.delete()
         table.delete()
@@ -269,7 +269,7 @@ class ReservationTestCase(APITestCase):
         current_date = (datetime.now()+timedelta(hours=1)).strftime('%Y-%m-%d')
         
         # data = {"tables":[1]}
-        resp = self.client.get('/api/reservation?start='+current_date+'&end='+current_date+"&tables[]=1", content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/reservations?start='+current_date+'&end='+current_date+"&tables[]=1", content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
         reservation1.delete()
         reservation2.delete()
@@ -291,7 +291,7 @@ class ReservationTestCase(APITestCase):
         #create one in the past
         reservation = Reservation.objects.create(start_time=datetime.now()-timedelta(days=1), end_time=datetime.now()-timedelta(days=1), table=table)
 
-        resp = self.client.delete('/api/reservation/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.delete('/api/reservations/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         
         table.delete()
@@ -301,7 +301,7 @@ class ReservationTestCase(APITestCase):
     
     def test_delete_table_with_reservation(self):
         """
-            delete reservation with reservation
+            delete table with reservation
         """
         user = User.objects.create_user("test_admin","9999","Admin","testpassword")
         
@@ -311,7 +311,7 @@ class ReservationTestCase(APITestCase):
         #create reservation
         reservation = Reservation.objects.create(start_time=datetime.now()+timedelta(days=1), end_time=datetime.now()+timedelta(days=1), table=table)
 
-        resp = self.client.delete('/api/reservation/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.delete('/api/reservations/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         
         table.delete()
@@ -321,7 +321,7 @@ class ReservationTestCase(APITestCase):
 
     def test_delete_table_without_reservation(self):
         """
-            delete reservation in the past
+            delete table without reservation
         """
         user = User.objects.create_user("test_admin","9999","Admin","testpassword")
         
@@ -329,7 +329,7 @@ class ReservationTestCase(APITestCase):
         
         
 
-        resp = self.client.delete('/api/table/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.delete('/api/tables/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
         table.delete()
         
@@ -347,7 +347,7 @@ class ReservationTestCase(APITestCase):
         
         reservation = Reservation.objects.create(start_time=datetime.now(), end_time=datetime.now()+timedelta(hours=1), table=table)
         
-        resp = self.client.get('/api/today/reservation/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/today/reservations/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
         reservation.delete()
         table.delete()
@@ -364,7 +364,7 @@ class ReservationTestCase(APITestCase):
         
         reservation = Reservation.objects.create(start_time=datetime.now()+timedelta(hours=5), end_time=datetime.now()+timedelta(hours=6), table=table)
         
-        resp = self.client.get('/api/today/reservation/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/today/reservations/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         table.delete()
         
@@ -381,7 +381,7 @@ class ReservationTestCase(APITestCase):
         
         reservation = Reservation.objects.create(start_time=datetime.now()+timedelta(hours=5), end_time=datetime.now()+timedelta(hours=6), table=table)
         
-        resp = self.client.get('/api/today/reservation/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/today/reservations/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         table.delete()
         
@@ -399,7 +399,7 @@ class ReservationTestCase(APITestCase):
         
         reservation = Reservation.objects.create(start_time=datetime.now()+timedelta(hours=5), end_time=datetime.now()+timedelta(hours=6), table=table1)
         
-        resp = self.client.get('/api/today/reservation/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/today/reservations/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         table1.delete()
         table2.delete()
@@ -419,7 +419,7 @@ class ReservationTestCase(APITestCase):
         
         reservation = Reservation.objects.create(start_time=datetime.now()+timedelta(hours=5), end_time=datetime.now()+timedelta(hours=6), table=table1)
         
-        resp = self.client.get('/api/today/reservation/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/today/reservations/timeslots/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         table1.delete()
         table2.delete()

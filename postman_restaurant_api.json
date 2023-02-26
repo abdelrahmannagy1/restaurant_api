@@ -127,7 +127,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/table"
+                  "path": "/api/tables"
                 },
                 "id": "8758400c-294e-47c2-824f-54ff99535338",
                 "name": "add_table",
@@ -171,7 +171,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/table"
+                  "path": "/api/tables"
                 },
                 "id": "8ecfcd0d-c646-4773-a17e-9fe5d7019347",
                 "name": "get_tables",
@@ -211,7 +211,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/table"
+                  "path": "/api/tables"
                 },
                 "id": "c3650b43-ee37-44a8-976f-840d8062aabc",
                 "name": "add_table_invalid_lt_1",
@@ -256,7 +256,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/table"
+                  "path": "/api/tables"
                 },
                 "id": "cc55668a-bdd2-491f-8484-660e0f14cec9",
                 "name": "add_table_invalid_gt_12",
@@ -301,7 +301,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/reservation"
+                  "path": "/api/reservations"
                 },
                 "id": "e135fe89-905e-4f09-af34-a4749e266cf4",
                 "name": "set_reservation",
@@ -345,7 +345,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/reservation"
+                  "path": "/api/reservations"
                 },
                 "id": "a80d9747-6481-499e-9d9c-553d7841e37e",
                 "name": "get_reservations",
@@ -384,7 +384,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/reservation/1"
+                  "path": "/api/reservations/1"
                 },
                 "id": "623e0ed7-48df-4c11-93db-73c993aa8663",
                 "name": "delete_reservation",
@@ -423,7 +423,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/today/reservation"
+                  "path": "/api/today/reservations"
                 },
                 "id": "f118c9c0-d2ec-4b2a-b324-d5d88b3f672f",
                 "name": "get_reservations_today",
@@ -462,7 +462,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/today/reservation/timeslots/2"
+                  "path": "/api/today/reservations/timeslots/2"
                 },
                 "id": "13babe3b-1941-4aaa-8b0a-20c88b9fa936",
                 "name": "gettimeslots",
@@ -501,7 +501,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/table/2"
+                  "path": "/api/tables/2"
                 },
                 "id": "33e9cb2f-94cf-4d2b-9c91-f517da6469a8",
                 "name": "delete_table",
@@ -551,7 +551,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/reservation"
+                  "path": "/api/reservations"
                 },
                 "id": "a9f5cd53-af81-40fe-9615-fef22a7b29a6",
                 "name": "get_all_reservations_by_date",
@@ -596,7 +596,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/today/reservation"
+                  "path": "/api/today/reservations"
                 },
                 "id": "020fa8aa-030f-499f-8bd3-13343043a0b8",
                 "name": "get_all_reservations_today_by_order",
@@ -641,7 +641,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/reservation"
+                  "path": "/api/reservations"
                 },
                 "id": "11c80e3f-fc6d-434d-a748-7682d8e39fb3",
                 "name": "get_reservations_filter_by_tables",
@@ -681,11 +681,6 @@
                       },
                       {
                         "enabled": true,
-                        "name": "",
-                        "value": "2023-02-20"
-                      },
-                      {
-                        "enabled": true,
                         "name": "end",
                         "value": "2023-02-25"
                       },
@@ -701,7 +696,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/reservation"
+                  "path": "/api/reservations"
                 },
                 "id": "08f853cd-c72d-4839-9c7d-9f8d236e83d3",
                 "name": "get_all_reservations_by_date_filter_by_table",
