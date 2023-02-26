@@ -146,33 +146,12 @@ use the /api/users/login endpoint with the following format for the POST request
   
 
 ```
-
-  
-
 {
-
-  
-
 "user": {
-
-  
-
 "emp_number": "",
-
-  
-
 "password": ""
-
-  
-
 }
-
-  
-
 }
-
-  
-
 ```
 
   
@@ -182,13 +161,7 @@ to get the authorization token with the authorization header being
   
 
 ```
-
-  
-
 Authorization: Token + ACCOUNT_TOKEN_HERE
-
-  
-
 ```
 
   
