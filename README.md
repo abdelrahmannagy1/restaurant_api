@@ -258,57 +258,22 @@ tests in ./TableMangement/tests.py
   
 
 -  /api/users/register **POST**
-
-  
-
 -- registers a staff user(Admin/Employee)
-
-  
-
 -- admin account required for access
-
-  
-
 -- example request:
 
   
 
 ```
-
-  
-
 {
 
-  
-
 "user": {
-
-  
-
 "emp_name": "test3",
-
-  
-
 "emp_number": "1386",
-
-  
-
 "role": "Employee",
-
-  
-
 "password": "testtest"
-
-  
-
 }
-
-  
-
 }
-
-  
-
 ```
 
   
@@ -316,45 +281,18 @@ tests in ./TableMangement/tests.py
   
 
 -  /api/users/login **POST**
-
-  
-
 -- logins a staff user
-
-  
-
 -- example request:
 
   
 
 ```
-
-  
-
 {
-
-  
-
 "user": {
-
-  
-
 "emp_number": "3333",
-
-  
-
 "password": "passowrd"
-
-  
-
 }
-
-  
-
 }
-
-  
-
 ```
 
   
@@ -362,61 +300,25 @@ tests in ./TableMangement/tests.py
   
 
 -  /api/table **POST**
-
-  
-
 -- adds a table
-
-  
-
 -- admin account required for access
-
-  
-
 -- example request:
 
   
 
 ```
-
-  
-
 {
-
-  
-
 "table": {
-
-  
-
 "table_number" : 3,
-
-  
-
 "num_seats": 2
-
-  
-
 }
-
-  
-
 }
-
-  
-
 ```
 
   
 
 -  /api/table **GET**
-
-  
-
 -- gets all tables
-
-  
-
 -- admin account required for access
 
   
@@ -424,13 +326,7 @@ tests in ./TableMangement/tests.py
   
 
 -  /api/table/int:table_number **DELETE**
-
-  
-
 -- deletes a table
-
-  
-
 -- admin account required for access
 
   
@@ -438,59 +334,26 @@ tests in ./TableMangement/tests.py
   
 
 -  /api/reservation **POST**
-
-  
-
 -- sets a reservation
-
 -- example request:
 
   
 
 ```
 
-  
-
 {
-
-  
-
 "reservation": {
-
-  
-
 "table_number": 3,
-
-  
-
 "start_time":"2023-02-22 23:45:06",
-
-  
-
 "end_time": "2023-02-22 23:55:06"
-
-  
-
 }
-
-  
-
 }
-
-  
-
 ```
 
   
 
 -  /api/reservation **GET**
-
-  
-
 -- gets all reservations
-
-  
-
 -- admin account required for access
 
   
@@ -498,76 +361,40 @@ tests in ./TableMangement/tests.py
   
 
 -  /api/reservation?tables[]=*value1*&tables[]=*value2* **GET**
-
-  
-
 -- gets all reservations and filters by the list of tables in the url params
-
-  
-
 -- admin account required for access
-
-  
-
 -- used to filter by table number
 
 -  /api/reservation?date=*start*&date=*end* **GET**
-
-  
-
 -- gets all reservations filtered by date
-
-  
-
 -- admin account required for access
 
   
 
 -  /api/reservation?date=*start*&date=*end*&tables[]=*value1*&tables[]=*value2* **GET**
-
-  
-
 -- gets all reservations filtered by date and the list of tables in the url parameters
-
-  
-
 -- admin account required for access
-
-  
-
 -- used to filter by table number
   
   
 
 -  /reservation/int:id **DELETE**
-
-  
-
 -- deletes a reservation number
 
   
 
 -  /api/today/reservation **GET**
-
-  
-
 -- gets all reservations today
 
   
 
 -  /api/today/reservation/timeslots/int:required_seats **GET**
-
-  
-
 -- gets all timeslots available today for the required seats
 
   
   
 
 -  /api/today/reservation?order=asc *or* order=desc **GET**
-
-  
-
 -- gets all reservations today by ascending or descending order
 
   
