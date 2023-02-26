@@ -29,9 +29,10 @@ class ReservationTestCase(APITestCase):
         """
         user = User.objects.create_user("test_admin","9999","Employee","testpassword")
 
-        resp = self.client.get('/api/table/deletetable/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.delete('/api/table/2', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
        
-        self.assertEquals(resp.status_code,405)
+        self.assertEquals(resp.status_code,403)
+
     def test_get_tables_not_admin(self):
         """
             not admin
@@ -44,7 +45,7 @@ class ReservationTestCase(APITestCase):
         #create one in the past
         reservation = Reservation.objects.create(start_time=datetime.now()-timedelta(days=1), end_time=datetime.now()-timedelta(days=1), table=table)
 
-        resp = self.client.get('/api/table/gettables', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/table', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         
         table.delete()
@@ -64,7 +65,7 @@ class ReservationTestCase(APITestCase):
         #create one in the past
         reservation = Reservation.objects.create(start_time=datetime.now()-timedelta(days=1), end_time=datetime.now()-timedelta(days=1), table=table)
 
-        resp = self.client.get('/api/table/gettables', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.get('/api/table', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         reservation.delete()
         
         table.delete()
@@ -328,7 +329,7 @@ class ReservationTestCase(APITestCase):
         
         
 
-        resp = self.client.delete('/api/table/deletetable/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
+        resp = self.client.delete('/api/table/1', content_type='application/json', HTTP_AUTHORIZATION='Token '+user.token)
         
         table.delete()
         

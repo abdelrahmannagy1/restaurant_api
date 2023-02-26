@@ -12,8 +12,19 @@ from django.utils import timezone
 from django.db.models import Max
 from django.db.models import Q
 
-class GetTablesAPIView(APIView):
+# class GetTablesAPIView(APIView):
+#     permission_classes = (IsAuthenticated,)
+
+#     def get(self, request, format=None):
+#         if not request.user.role == 'Admin': 
+#             raise exceptions.NotAuthenticated("Not an admin User")
+
+#         tables = [table.table_number for table in Table.objects.all()]
+#         return Response({"tables":tables},status=status.HTTP_200_OK)
+
+class TableAPIView(APIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = TableSerializer
 
     def get(self, request, format=None):
         if not request.user.role == 'Admin': 
@@ -21,11 +32,6 @@ class GetTablesAPIView(APIView):
 
         tables = [table.table_number for table in Table.objects.all()]
         return Response({"tables":tables},status=status.HTTP_200_OK)
-
-
-class AddTableAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = TableSerializer
 
     def post(self, request, format=None):
         if not request.user.role == 'Admin': 
@@ -37,11 +43,6 @@ class AddTableAPIView(APIView):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-
-class DeleteTableAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
-
     def delete(self, request, table_number=None, format=None):
         if not request.user.role == 'Admin': 
             raise exceptions.NotAuthenticated("Not an admin User")
@@ -62,6 +63,9 @@ class DeleteTableAPIView(APIView):
 
 
 
+
+class ReservationAPIView(APIView):
+    pass
 
 
 class SetReservationAPIView(APIView):

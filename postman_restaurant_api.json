@@ -127,7 +127,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/table/addtable"
+                  "path": "/api/table"
                 },
                 "id": "8758400c-294e-47c2-824f-54ff99535338",
                 "name": "add_table",
@@ -171,7 +171,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/table/gettables"
+                  "path": "/api/table"
                 },
                 "id": "8ecfcd0d-c646-4773-a17e-9fe5d7019347",
                 "name": "get_tables",
@@ -501,7 +501,7 @@
                     "version": "V11"
                   },
                   "host": "127.0.0.1:8000",
-                  "path": "/api/table/deletetable/2"
+                  "path": "/api/table/2"
                 },
                 "id": "33e9cb2f-94cf-4d2b-9c91-f517da6469a8",
                 "name": "delete_table",
