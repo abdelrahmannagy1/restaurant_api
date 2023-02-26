@@ -34,29 +34,11 @@ This projects is written in python and uses the following packages
   
 
 ```
-
-  
-
 pip install Django
-
-  
-
 pip install djangorestframework
-
-  
-
 pip install markdown
-
-  
-
 pip install django-filter
-
-  
-
 pip install psycopg2
-
-  
-
 ```
 
   
@@ -72,33 +54,12 @@ Use the pgAdmin interface or use the following SQL to create the database. A SQL
   
 
 ```
-
-  
-
 CREATE DATABASE restaurant_db
-
-  
-
 WITH
-
-  
-
 OWNER = postgres
-
-  
-
 ENCODING = 'UTF8'
-
-  
-
 CONNECTION LIMIT = -1
-
-  
-
 IS_TEMPLATE = False;
-
-  
-
 ```
 
   
