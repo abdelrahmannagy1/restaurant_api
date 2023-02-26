@@ -67,7 +67,50 @@ class TableAPIView(APIView):
 class ReservationAPIView(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = SetReservationSerializer
+    reservation_serializer_class = ReservationSerializer
     pagination_class = CustomPagination
+
+    def get(self, request, format=None):
+        if not request.user.role == 'Admin': 
+            raise exceptions.NotAuthenticated("Not an admin User")
+        
+        tables = request.query_params.getlist('tables[]')
+        
+        
+
+        if len(tables) > 0:
+            tables = [int(x) for x in tables]
+            reservations_qs = Reservation.objects.filter(table__table_number__in=tables)
+
+            start = request.query_params.get('start',None)
+            end = request.query_params.get('end',None)
+            
+            if start:
+                reservations_qs = reservations_qs.filter(start_time__date__gte=start)
+            if end:
+                reservations_qs = reservations_qs.filter(start_time__date__lte=end)
+        else:
+            reservations_qs = Reservation.objects.all()
+
+            start = request.query_params.get('start',None)
+            end = request.query_params.get('end',None)
+
+            if start:
+                reservations_qs = reservations_qs.filter(start_time__date__gte=start)
+            if end:
+                reservations_qs = reservations_qs.filter(start_time__date__lte=end)
+
+
+
+
+
+
+
+        paginator = CustomPagination()
+        res = paginator.paginate_queryset(reservations_qs, request, view=self)
+        serializer = self.reservation_serializer_class(res, many=True)
+        
+        return paginator.get_paginated_response(serializer.data)
 
     
 
@@ -126,32 +169,6 @@ class ReservationAPIView(APIView):
 
 
 
-class GetAllReservationsAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
-    pagination_class = CustomPagination
-    serializer_class = ReservationSerializer
-
-    def get(self, request, format=None):
-        if not request.user.role == 'Admin': 
-            raise exceptions.NotAuthenticated("Not an admin User")
-        
-        tables = request.query_params.getlist('tables[]')
-        
-        
-
-        if len(tables) > 0:
-            tables = [int(x) for x in tables]
-            reservations_qs = Reservation.objects.filter(table__table_number__in=tables)
-        else:
-            reservations_qs = Reservation.objects.all()
-
-
-
-        paginator = CustomPagination()
-        res = paginator.paginate_queryset(reservations_qs, request, view=self)
-        serializer = self.serializer_class(res, many=True)
-        
-        return paginator.get_paginated_response(serializer.data)
     
     
 
@@ -275,14 +292,16 @@ class GetReservationsTodayAPIView(APIView):
         paginator = CustomPagination()
         current_date = datetime.now().date()
         reservations_qs = Reservation.objects.filter(start_time__date=current_date)
-        # print("*************")
-        # print(len(reservations_qs))
-        # print("*************")
+        order_query = request.query_params.get("order",None)
+
+        if order_query == 'asc': 
+            reservations_qs = reservations_qs.order_by('start_time')
+        elif order_query == 'desc':
+            reservations_qs = reservations_qs.order_by('-start_time')
+        
         res = paginator.paginate_queryset(reservations_qs, request, view=self)
         serializer = self.serializer_class(res, many=True)
-        # print("*************")
-        # print(serializer.data)
-        # print("*************")
+        
         return paginator.get_paginated_response(serializer.data)
 
 class GetReservationsTodayWithOrderAPIView(APIView):
