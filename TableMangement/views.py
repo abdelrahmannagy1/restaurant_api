@@ -65,12 +65,11 @@ class TableAPIView(APIView):
 
 
 class ReservationAPIView(APIView):
-    pass
-
-
-class SetReservationAPIView(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = SetReservationSerializer
+    pagination_class = CustomPagination
+
+    
 
     def post(self, request, format=None):
         
@@ -110,6 +109,21 @@ class SetReservationAPIView(APIView):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    def delete(self, request, reservation_id, format=None):
+        current_date = datetime.now()
+        try:
+            reservation = Reservation.objects.get(pk=reservation_id)
+        except:
+            return Response({"error": "No reservation Number matching"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if reservation.start_time.replace(tzinfo=None) < current_date:
+            return Response({"error": "Cannot delete reservations in the past"}, status=status.HTTP_400_BAD_REQUEST)
+
+        reservation.delete()
+        return Response("Object deleted", status=status.HTTP_200_OK)
+
+
+
 
 
 class GetAllReservationsAPIView(APIView):
@@ -127,6 +141,7 @@ class GetAllReservationsAPIView(APIView):
         serializer = self.serializer_class(res, many=True)
         
         return paginator.get_paginated_response(serializer.data)
+    
     def post(self, request, format=None):
         if not request.user.role == 'Admin': 
             raise exceptions.NotAuthenticated("Not an admin User")
@@ -297,21 +312,7 @@ class GetReservationsTodayWithOrderAPIView(APIView):
         return paginator.get_paginated_response(serializer.data)
 
 
-class DeleteReservationAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
 
-    def delete(self, request, reservation_id, format=None):
-        current_date = datetime.now()
-        try:
-            reservation = Reservation.objects.get(pk=reservation_id)
-        except:
-            return Response({"error": "No reservation Number matching"}, status=status.HTTP_400_BAD_REQUEST)
-
-        if reservation.start_time.replace(tzinfo=None) < current_date:
-            return Response({"error": "Cannot delete reservations in the past"}, status=status.HTTP_400_BAD_REQUEST)
-
-        reservation.delete()
-        return Response("Object deleted", status=status.HTTP_200_OK)
         
 
         

@@ -141,6 +141,8 @@ tests in ./TableMangement/tests.py
 
 -  /api/users/register **POST**
 
+-- registers a staff user(Admin/Employee)
+
 -- admin account required for access
 
 -- example request:
@@ -169,6 +171,8 @@ tests in ./TableMangement/tests.py
 
 -  /api/users/login **POST**
 
+-- logins a staff user
+
 -- example request:
 
 ```
@@ -190,6 +194,8 @@ tests in ./TableMangement/tests.py
   
 
 -  /api/table **POST**
+
+-- adds a table
 
 -- admin account required for access
 
@@ -213,18 +219,23 @@ tests in ./TableMangement/tests.py
 
 -  /api/table **GET**
 
+-- gets all tables
+
 -- admin account required for access
 
   
 
 -  /api/table/int:table_number **DELETE**
 
+-- deletes a table
+
 -- admin account required for access
 
   
 
--  /api/reservation/setreservation **POST**
+-  /api/reservation **POST**
 
+-- sets a reservation
 -- example request:
 
 ```
@@ -245,13 +256,55 @@ tests in ./TableMangement/tests.py
 
 ```
 
--  /api/reservation/getallreservations **GET**
+-  /api/reservation/all **GET**
+
+-- gets all reservations
 
 -- admin account required for access
 
   
 
--  /api/reservation/getallreservations **POST**
+-  /api/reservation/all **POST**
+
+-- gets all reservations and filters by the list of tables passed by the request
+
+-- admin account required for access
+
+-- used to filter by table number
+
+-- example request:
+
+```
+
+{
+
+"tables":[1,2]
+
+}
+
+```
+
+-  /reservation/int:id **DELETE**
+
+-- deletes a reservation number
+
+-  /api/reservation/today **GET**
+
+-- gets all reservations today
+
+-  /api/reservation/timeslots/int:required_seats **GET**
+
+-- gets all timeslots available today for the required seats
+
+-  /api/reservation/all/date:start/date:end **GET**
+
+-- gets all reservations filtered by date
+
+-- admin account required for access
+
+-  /api/reservation/all/date:start/date:end **POST**
+
+-- gets all reservations filtered by date and the list of tables in the request
 
 -- admin account required for access
 
@@ -269,35 +322,9 @@ tests in ./TableMangement/tests.py
 
 ```
 
--  /reservation/deletereservation/int:id **DELETE**
+-  /api/reservation/today/str:'asc' *or* str:'desc' **GET**
 
--  /api/reservation/getallreservationstoday **GET**
-
--  /api/reservation/gettimeslots/int:required_seats **GET**
-
--  /api/reservation/getallreservationsfromdate/date:start/date:end **GET**
-
--- admin account required for access
-
--  /api/reservation/getallreservationsfromdate/date:start/date:end **POST**
-
--- admin account required for access
-
--- used to filter by table number
-
----- example request:
-
-```
-
-{
-
-"tables":[1,2]
-
-}
-
-```
-
--  /api/reservation/getallreservationstoday/str:'asc' *or* str:'desc' **GET**
+-- gets all reservations today ordered ascending or descending
 
   
 
