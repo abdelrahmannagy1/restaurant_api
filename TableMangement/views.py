@@ -146,7 +146,11 @@ class ReservationAPIView(APIView):
             # print("************")
             # print(req_start_time.time())
             # print(req_end_time.time())
-            if (req_start_time.time() >= r.start_time.time().replace(tzinfo=None) and req_start_time.time() <= r.end_time.time().replace(tzinfo=None)) or (req_end_time.time() >= r.start_time.time().replace(tzinfo=None) and req_end_time.time() <= r.end_time.time().replace(tzinfo=None)):
+            # if (req_start_time.time() >= r.start_time.time().replace(tzinfo=None) and req_start_time.time() <= r.end_time.time().replace(tzinfo=None)) or (req_end_time.time() >= r.start_time.time().replace(tzinfo=None) and req_end_time.time() <= r.end_time.time().replace(tzinfo=None)):
+            #       return Response({"error": "Conflicting Reservation"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            r.end_time.time().replace(tzinfo=None)
+            r.start_time.time().replace(tzinfo=None)
+            if(req_start_time.time() <= r.end_time.time() and req_end_time.time() >= r.start_time.time()):
                   return Response({"error": "Conflicting Reservation"}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
         serializer.save()

@@ -171,7 +171,7 @@ class ReservationTestCase(APITestCase):
         
         table = Table.objects.get_or_create(table_number=1, num_seats=2 )[0]
         
-        reservation1 = Reservation.objects.create(start_time=datetime.now()+timedelta(hours=5), end_time=datetime.now()+timedelta(hours=6), table=table)
+        reservation1 = Reservation.objects.create(start_time=datetime.now(), end_time=datetime.now()+timedelta(hours=1), table=table)
         
         #create one in a different day
         reservation2 = Reservation.objects.create(start_time=datetime.now()+timedelta(days=1), end_time=datetime.now()+timedelta(days=1), table=table)
