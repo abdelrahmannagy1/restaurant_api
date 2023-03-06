@@ -280,8 +280,8 @@ class GetTimeslotsAPIView(APIView):
             for r in table_reservations:
                 res.append([curr_time, r.start_time])
                 curr_time = r.end_time
-                
-        if curr_time != curr_time_ref:
+
+        if curr_time != curr_time_ref: #to check if we need to add the remaining time to restaurant close time as a time slot
             res.append([curr_time, CLOSE_TIME])
 
         if not res:
