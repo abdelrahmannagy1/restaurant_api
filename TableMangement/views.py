@@ -267,6 +267,8 @@ class GetTimeslotsAPIView(APIView):
 
         res = []
         curr_time = datetime.now()
+        curr_time_ref = datetime.now()
+
         for i in range(len(ok_tables)):
             table_reservations = ok_tables[i].reservation_set.filter(start_time__gte=current_time).exclude(table__num_seats__lt=num_seats).order_by('start_time')
 
@@ -278,8 +280,9 @@ class GetTimeslotsAPIView(APIView):
             for r in table_reservations:
                 res.append([curr_time, r.start_time])
                 curr_time = r.end_time
-        
-        res.append([curr_time, CLOSE_TIME])
+                
+        if curr_time != curr_time_ref:
+            res.append([curr_time, CLOSE_TIME])
 
         if not res:
             return Response({"error": "no tables available"}, status=status.HTTP_400_BAD_REQUEST)
